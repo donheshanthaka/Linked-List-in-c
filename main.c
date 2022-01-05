@@ -217,6 +217,23 @@ void removeAt(struct node **head, int position){
 };
 
 
+// This function will reverse the elements in the list
+struct node* reverse(struct node *head){ // this function will take the pointer head as an argument
+    struct node *prev = NULL; // a pointer of type node is created as prev
+    struct node *next = NULL; // a pointer of type node is created as next
+
+    while(head != NULL){ // the loop will run until the head node is null or at the end of the linked list
+        next = head->link; // the node next to the head node is pointed to the next pointer
+        // the link of the head(which is usually the next node of the link) will be pointed to the previous node of the current head position
+        head->link = prev;
+        prev = head; // previous will be pointed to the current head position
+        head = next; // the head pointer will be moved to the next position in the original direction(right)
+    }
+    head = prev; // since the head is null after the loop ends, the head is being pointed to the previous position which is the last node when the loop ended
+    return head;
+};
+
+
 // Display the entire list on to the console
 void print_data(struct node *head){
     printf("\n");
@@ -257,6 +274,8 @@ int main()
     removeElement(&head, 555); // remove the first occurrence of the given element
 
     removeAt(&head, 10); // the head pointer will be sent as a reference, so the function will be able to update the head pointer itself inside the function
+
+    head = reverse(head); // the head pointer is passed by value to the reverse function, Return a reversed linked list
 
     print_data(head); // print the entire list to the console
 
