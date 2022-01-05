@@ -316,6 +316,16 @@ int listSize(struct node *head){
 };
 
 
+// the function checks if the list is empty
+void isEmpty(struct node *head){
+    if(head == NULL){
+        printf("\nThe list is empty\n");
+    }else{
+        printf("\nThe list is not empty\n");
+    }
+};
+
+
 int main()
 {
     struct node *head = listInit(45);
@@ -353,6 +363,8 @@ int main()
     printf("\nThe element is at position: %d\n", get(head, 3)); // Return an element from the list at any given position
 
     printf("\nNumber of elements in the list: %d\n", listSize(head)); // Return the number of elements in the list
+
+    isEmpty(head); // Check if the list is empty
 
     return 0;
 }
