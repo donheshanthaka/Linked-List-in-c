@@ -109,6 +109,36 @@ void removeFirst(struct node **head){ // the head is passed as a pointer to the 
 };
 
 
+// the function will delete the last node of the list
+void removeLast(struct node *head){
+    if(head == NULL){
+        printf("\nList is already empty!\n");
+    }
+    else if(head->link == NULL){ // if there is only one node in the link which is the head node, it will be turned to null
+        free(head);
+        head = NULL;
+    }
+    else{
+        struct node *temp = head; // temporary pointer node is created and the pointer head is assigned to that
+        struct node *temp2 = head; // another temporary pointer node is created and the pointer head is assigned to that
+
+        // The list will loop until temp is at the last node by checking if the link of the current node is null,
+        //when it is null that means we are at the last node of the link
+        while(temp->link != NULL){
+            // temp2 will always stay one step behind of temp cause temp is assigned to temp2 before going into the next node,
+            // therefore when temp is at the last node temp2 will be one node before the last node
+            temp2 = temp;
+            temp = temp->link; // temp pointer will be pointed to the next node in the list
+        }
+        // when we are at the end of the list, the temp2 pointer which is pointing to the last node of the link will be set to null,
+        // that means there no more nodes after temp2
+        temp2->link = NULL;
+        free(temp); // temp will be freed
+        temp = NULL; // and then set to null
+    }
+};
+
+
 // Display the entire list on to the console
 void print_data(struct node *head){
     printf("\n");
@@ -143,6 +173,8 @@ int main()
     replace(head, 45, 50); // replace the old element with new data
 
     removeFirst(&head); // the head pointer is passed by reference, the head node will be removed
+
+    removeLast(head); // the head pointer is passed by value, don't need to update the head since no changes are made to the head pointer
 
     print_data(head); // print the entire list to the console
 
