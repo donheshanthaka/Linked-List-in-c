@@ -75,6 +75,27 @@ void insert(struct node **head, int data, int position){
 };
 
 
+// replace the value of the given element.
+void replace(struct node *head, int element, int data){ //the head pointer is passed along with the element to be updated with new data
+    struct node *temp = head; // temporary pointer is created that points to the head pointer
+    int found = 0;
+    // loop through the link until temp is moved passed the last node (link of the last node is pointing to NULL)
+    // which means the step after the last node will make temp point to NULL, thats when the loop ends
+    while(temp != NULL){
+        if(temp->data == element){ // checking if the currently selected node's data is equal to the searched element
+            temp->data = data; // the data is replaced with new data
+            found = 1;
+            printf("\nElement (%d) updated successfully with (%d)\n", element, data);
+            break;
+        }
+        temp = temp->link; // temp pointer is updated to the next node
+    }
+    if(!found){
+        printf("\nThe element (%d) was not found in the list\n", element);
+    }
+};
+
+
 // Display the entire list on to the console
 void print_data(struct node *head){
     printf("\n");
@@ -105,6 +126,8 @@ int main()
     // the head pointer is passed by value along with data and the position,
     //don't need to update the head since the new node is not being added at the beginning
     insert(&head, 4, 4);
+
+    replace(head, 45, 50); // replace the old element with new data
 
     print_data(head); // print the entire list to the console
 
