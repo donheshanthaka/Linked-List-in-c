@@ -234,6 +234,18 @@ struct node* reverse(struct node *head){ // this function will take the pointer 
 };
 
 
+// The function will delete the entire list
+void deleteList(struct node **head){ // the head is passed as a pointer to the pointer head
+    struct node *temp = *head; // temporary pointer is created that points to the head pointer
+
+    while(temp != NULL){ // the loop will continue until temp is null
+        temp = temp->link; // assigning the next node in the list to temp
+        free(*head); // freeing the current head position
+        *head = temp; // new head is assigned at the current temporary value
+    }
+};
+
+
 // Display the entire list on to the console
 void print_data(struct node *head){
     printf("\n");
@@ -276,6 +288,8 @@ int main()
     removeAt(&head, 10); // the head pointer will be sent as a reference, so the function will be able to update the head pointer itself inside the function
 
     head = reverse(head); // the head pointer is passed by value to the reverse function, Return a reversed linked list
+
+    deleteList(&head); // delete the entire list
 
     print_data(head); // print the entire list to the console
 
