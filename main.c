@@ -139,6 +139,44 @@ void removeLast(struct node *head){
 };
 
 
+// Remove the first occurrence of the given element
+void removeElement(struct node **head, int element){ //the head is passed as a pointer to the pointer head along with the element to be remove
+    struct node *current = *head; // current pointer is created that points to the head pointer
+    struct node *previous = *head; // previous pointer is created that points to the head pointer
+    struct node *ptr = *head;
+    int found = 0;
+    while(current != NULL){ // loop through all the elements
+        if(current->data == element){ // if the data of the selected node is equal to the given element
+            if(current->data == ptr->data){ // if the element found is the head node, it has to be removed in a different way compared to the rest
+                struct node *temp = *head; // temporary pointer node is created and the pointer head is assigned to that
+                *head = temp->link; // the head pointer will be pointed to the next node in the list
+                free(temp); // the temp pointer that is pointing the old head node will be freed
+                temp = NULL; // it is best practice to make the freed pointers null
+                found = 1;
+                printf("\nElement (%d) removed successfully\n", element);
+                break;
+            }
+            //if the selected node is not the head node
+            // the next pointer link of the node which is behind the node that we want to delete(previous)
+            // will be set to the node in front of the node that we want to delete,
+            // which means the node that we want to delete will not be pointed to by any other nodes
+            previous->link = current->link;
+            free(current); // the current node that we want to delete will be freed
+            current = NULL; // then set to null
+            printf("\nElement (%d) removed successfully\n", element);
+            found = 1;
+            break;
+        }
+        // the previous node will always stay one step behind the current node
+        previous = current;
+        current = current->link;
+    }
+    if(!found){
+        printf("\nThe element (%d) was not found in the list\n", element);
+    }
+};
+
+
 // Display the entire list on to the console
 void print_data(struct node *head){
     printf("\n");
@@ -175,6 +213,8 @@ int main()
     removeFirst(&head); // the head pointer is passed by reference, the head node will be removed
 
     removeLast(head); // the head pointer is passed by value, don't need to update the head since no changes are made to the head pointer
+
+    removeElement(&head, 555); // remove the first occurrence of the given element
 
     print_data(head); // print the entire list to the console
 
