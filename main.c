@@ -177,6 +177,46 @@ void removeElement(struct node **head, int element){ //the head is passed as a p
 };
 
 
+// removeAt function will delete the element at the given position
+// the head is passed as a pointer to the pointer head, that is why in order to access the value inside head pointer two ** are used
+void removeAt(struct node **head, int position){
+    struct node *current = *head;
+    struct node *previous = *head;
+    int indexStatus = 0; // to check if the list index will go out of range
+
+    if(*head == NULL){
+        printf("List is already empty!");
+    }
+    else if(position == 1){ // if the given position is one(which means head), the head pointer will be pointed to the next node in the link
+        *head = current->link; // the head pointer is pointed to the next node in the link
+        free(current); // the current pointer will be freed
+        current = NULL; // and then set to null
+    }
+    else{
+        while(position != 1){ // the loop will run until the position is equal to 1
+            previous = current; // the previous will be set equal to the current pointer
+            current = current->link; // and the current pointer will be pointed to the next node in the list
+            position--;
+            // current->link == NULL means we are already at the last node and the position variable haven't still reached to 1,
+            // which means the user entered a value that is higher than the size of the list
+            if (current->link == NULL){
+                printf("\nError: List index out of range\n");
+                indexStatus = 1;
+                break;
+            }
+        }
+        if(!indexStatus){ // if the index status did not get turned to one means that the loop ended at the correct position
+            // the next pointer link of the node which is behind the node that we want to delete(previous)
+            // will be set to the node in front of the node that we want to delete,
+            // which means the node that we want to delete will not be pointed to by any other nodes
+            previous->link = current->link;
+            free(current); // the current node that we want to delete will be freed
+            current = NULL; // then set to null
+        }
+    }
+};
+
+
 // Display the entire list on to the console
 void print_data(struct node *head){
     printf("\n");
@@ -215,6 +255,8 @@ int main()
     removeLast(head); // the head pointer is passed by value, don't need to update the head since no changes are made to the head pointer
 
     removeElement(&head, 555); // remove the first occurrence of the given element
+
+    removeAt(&head, 10); // the head pointer will be sent as a reference, so the function will be able to update the head pointer itself inside the function
 
     print_data(head); // print the entire list to the console
 
