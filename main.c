@@ -52,6 +52,29 @@ void append(struct node *head, int data){
 };
 
 
+void insert(struct node **head, int data, int position){
+    struct node *ptr = *head; // the ptr pointer will point to the starting node of the list
+    struct node *newNode = malloc(sizeof(struct node)); // the new node is created
+    newNode->data = data;
+    newNode->link = NULL;
+
+    if(position == 1){ // if the position selected is at the beginning of the list(head)
+        newNode->link = *head;  // the new node will be pointed to the current head from the main function, that is why "*" head is used for dereferencing
+        *head = newNode;    // the head of the main function is now updated with the newly created node pointer's address
+
+    }else{
+        position--;
+        while(position != 1){
+            // ptr is updated by the next node's address in the list until the position becomes 1, which is one node behind the position we desire
+            ptr = ptr->link;
+            position--;
+        }
+        newNode->link = ptr->link; // the link of the new node is updated with link of the currently selected node
+        ptr->link = newNode; // then the current node's link is updated to point the new node created, therefore the new node is added in between the two nodes
+    }
+};
+
+
 // Display the entire list on to the console
 void print_data(struct node *head){
     printf("\n");
@@ -78,6 +101,10 @@ int main()
     // Appending the values to the end of the list
     append(head, 3);
     append(head, 67);
+
+    // the head pointer is passed by value along with data and the position,
+    //don't need to update the head since the new node is not being added at the beginning
+    insert(&head, 4, 4);
 
     print_data(head); // print the entire list to the console
 
