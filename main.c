@@ -96,6 +96,19 @@ void replace(struct node *head, int element, int data){ //the head pointer is pa
 };
 
 
+// Remove the first element of the list
+void removeFirst(struct node **head){ // the head is passed as a pointer to the pointer head
+    if (*head == NULL){
+        printf("\nList is already empty!\n");
+    }else{
+        struct node *temp = *head; // temporary pointer node is created and the pointer head is assigned to that
+        *head = temp->link; // the head pointer will be pointed to the next node in the list
+        free(temp); // the temp pointer that is pointing the old head node will be freed
+        temp = NULL; // it is best practice to make the freed pointers null
+    }
+};
+
+
 // Display the entire list on to the console
 void print_data(struct node *head){
     printf("\n");
@@ -128,6 +141,8 @@ int main()
     insert(&head, 4, 4);
 
     replace(head, 45, 50); // replace the old element with new data
+
+    removeFirst(&head); // the head pointer is passed by reference, the head node will be removed
 
     print_data(head); // print the entire list to the console
 
