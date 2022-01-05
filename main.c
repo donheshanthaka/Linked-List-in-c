@@ -246,6 +246,26 @@ void deleteList(struct node **head){ // the head is passed as a pointer to the p
 };
 
 
+// Display the position of the given element in the list.
+void search(struct node *head, int element){ //the head pointer is passed along with the element to be searched
+    struct node *temp = head; // temporary pointer is created that points to the head pointer
+    int position = 1;
+    int found = 0;
+    while(temp != NULL){ // loop through the link until temp is at the last node
+        if(temp->data == element){
+            printf("\nThe element (%d) found at position: %d\n", element, position);
+            found = 1;
+            break;
+        }
+        temp = temp->link; // temp will be pointed to the next node
+        position++;
+    }
+    if(!found){
+        printf("\nThe element (%d) was not found in the list\n", element);
+    }
+};
+
+
 // Display the entire list on to the console
 void print_data(struct node *head){
     printf("\n");
@@ -260,6 +280,7 @@ void print_data(struct node *head){
     }
     printf("\n");
 };
+
 
 int main()
 {
@@ -289,7 +310,9 @@ int main()
 
     head = reverse(head); // the head pointer is passed by value to the reverse function, Return a reversed linked list
 
-    deleteList(&head); // delete the entire list
+    //deleteList(&head); // delete the entire list
+
+    search(head, 111); // Search the index position of the given element
 
     print_data(head); // print the entire list to the console
 
