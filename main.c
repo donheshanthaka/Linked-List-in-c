@@ -304,6 +304,18 @@ int get(struct node *head, int position){
 };
 
 
+//Return the number of elements in the list.
+int listSize(struct node *head){
+    struct node *temp = head;
+    int count = 0;
+    while(temp != NULL){
+        temp = temp->link;
+        count++;
+    }
+    return count;
+};
+
+
 int main()
 {
     struct node *head = listInit(45);
@@ -339,6 +351,8 @@ int main()
     print_data(head); // print the entire list to the console
 
     printf("\nThe element is at position: %d\n", get(head, 3)); // Return an element from the list at any given position
+
+    printf("\nNumber of elements in the list: %d\n", listSize(head)); // Return the number of elements in the list
 
     return 0;
 }
