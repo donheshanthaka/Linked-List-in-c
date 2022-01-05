@@ -35,6 +35,23 @@ void add(struct node **head, int data){
     *head = newNode;    // the head of the main function is now updated with the newly created node pointer's address
 };
 
+
+// appending nodes to the end of the list
+void append(struct node *head, int data){
+    struct node *ptr, *newNode; // creates two pointers of type node
+    ptr = head;
+    newNode = (struct node*)malloc(sizeof(struct node)); // creates the new node and assigning it's memory location to newNode
+
+    newNode ->data = data; // updating the data field of the new newNode node
+    newNode ->link = NULL; // updating the link field
+
+    while(ptr->link != NULL){ // traversing the list until the last node (the condition should be ptr->link, not just ptr)
+        ptr = ptr->link; // keep updating the ptr
+    }
+    ptr->link = newNode; // update the last ptr with created node
+};
+
+
 // Display the entire list on to the console
 void print_data(struct node *head){
     printf("\n");
@@ -57,6 +74,10 @@ int main()
     // the head will be sent as a reference, so the function will be able to update the head pointer itself inside the function
     add(&head, 111);
     add(&head, 0);
+
+    // Appending the values to the end of the list
+    append(head, 3);
+    append(head, 67);
 
     print_data(head); // print the entire list to the console
 
