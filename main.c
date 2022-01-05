@@ -282,6 +282,28 @@ void print_data(struct node *head){
 };
 
 
+// Return an element from the list at any given position.
+int get(struct node *head, int position){
+    struct node *temp = head;
+    if(head == NULL){
+        printf("\nList is empty!\n");
+    }
+    else{
+        while(position != 1){ // the loop will run until the position is equal to 1, which is the desired position
+            temp = temp->link;
+            position--;
+            // if the temp == null that means the loop have ended without position being equal to 1,
+            // which means the user entered a value larger than the size of the list, therefore -1 would be returned
+            if (temp == NULL){
+                printf("\nError: List index out of range\n");
+                return -1;
+            }
+        }
+    }
+    return(temp->data);
+};
+
+
 int main()
 {
     struct node *head = listInit(45);
@@ -315,6 +337,8 @@ int main()
     search(head, 111); // Search the index position of the given element
 
     print_data(head); // print the entire list to the console
+
+    printf("\nThe element is at position: %d\n", get(head, 3)); // Return an element from the list at any given position
 
     return 0;
 }
